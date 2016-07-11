@@ -18,7 +18,6 @@
         }
     ],
     "require": {
-        "php": ">=7.*",
         "rwoverdijk/assetmanager": "1.*",
         "rcm/core": "1.*"
     },
