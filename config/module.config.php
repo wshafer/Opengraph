@@ -95,7 +95,7 @@ return [
         'defaults' => [
 
             'facebook' => [
-                'appId' => '1234',
+                'appId' => '',
             ],
 
             'general' => [
