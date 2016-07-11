@@ -41,15 +41,13 @@ class OpenGraphValidator implements ValidatorInterface
 
     protected function getValidatorsForType($type)
     {
-        if (empty($type)) {
-            return null;
-        }
-        
         switch ($type) {
             case 'website':
                 return new WebSiteValidator();
             case 'article':
                 return new ArticleValidator();
+            default:
+                return null;
         }
     }
 }

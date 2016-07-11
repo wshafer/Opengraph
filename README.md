@@ -38,3 +38,44 @@ your OG tags to appear
 ```php
 <?= $this->openGraph(); ?>
 ```
+
+Default Values
+==============
+The module contains some default values, but you'll want to customize
+these to your liking.
+
+Add the following config to global.php or local.php and adust the
+values according to your needs:
+
+```php
+return [
+    'openGraph' => [
+        'defaults' => [
+    
+            'facebook' => [
+                'appId' => '1234',
+            ],
+    
+            'general' => [
+                'ogType' => 'website',
+            ],
+    
+            'website' => [
+                'title' => 'No Title',
+                'image' => 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Blank_License_Plate_Shape.jpg',
+                'description' => '',
+                'siteName' => '',
+            ],
+    
+            'article' => [
+                'title' => 'No Title',
+                'image' => 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Blank_License_Plate_Shape.jpg',
+                'description' => '',
+                'siteName' => '',
+                'author' => '',
+                'section' => ''
+            ],
+        ],
+    ],
+];
+```

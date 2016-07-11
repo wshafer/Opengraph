@@ -52,7 +52,7 @@ class AdminController extends ApiAdminBaseController
         $this->entityManager = $entityManager;
         $this->hydrator = $hydrator;
         $this->cache = $cache;
-        $this->serverUrl;
+        $this->serverUrl = $serverUrl;
     }
 
     /**
@@ -108,8 +108,6 @@ class AdminController extends ApiAdminBaseController
             throw new \Exception('No Page Id Provided');
         }
 
-        $key = 'openGraph_'.md5($this->serverUrl->__invoke(true));
-
         $pageRepo = $this->entityManager->getRepository('Rcm\Entity\Page');
 
         $page = $pageRepo->find($pageId);
@@ -158,8 +156,10 @@ class AdminController extends ApiAdminBaseController
 
             $this->entityManager->flush();
 
-            $this->cache->removeItem($key);
-
+            if (!empty($data['cache']['key'])) {
+                $this->cache->removeItem($data['cache']['key']);
+            }
+            
             return new ApiJsonModel(null, 0, 'Success');
         }
 

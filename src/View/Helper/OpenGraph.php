@@ -11,7 +11,7 @@ use Zend\View\Helper\AbstractHelper;
 
 /**
  * Open Graph View Helper
- * 
+ *
  * @author    Westin Shafer <westin@havenly.com>
  * @copyright 2016 Westin Shafer
  * @license   License.txt New BSD License
@@ -25,6 +25,10 @@ class OpenGraph extends AbstractHelper
     protected $openGraphData;
 
     protected $config;
+
+    protected $page;
+
+    protected $site;
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -56,9 +60,8 @@ class OpenGraph extends AbstractHelper
 
     protected function getTags()
     {
-        $view = $this->getView();
-        $key = 'openGraph_'.md5($view->serverUrl(true));
-        
+        $key = $this->getCacheKey();
+
         if ($this->cache->hasItem($key)) {
             return $this->cache->getItem($key);
         }
@@ -66,7 +69,7 @@ class OpenGraph extends AbstractHelper
         $data = $this->getOpenGraphData();
 
         $return = $this->getGeneralTags($data);
-        
+
         switch ($data['general']['ogType']) {
             case 'website':
                 $return = array_merge($return, $this->getWebsiteTags($data));
@@ -92,7 +95,7 @@ class OpenGraph extends AbstractHelper
         if (!empty($data['facebook']['appId'])) {
             $return[] = '<meta property="fb:app_id" content="'.$data['facebook']['appId'].'" />';
         }
-        
+
         return $return;
     }
 
@@ -111,14 +114,12 @@ class OpenGraph extends AbstractHelper
         if (!empty($data['website']['siteName'])) {
             $tags[] = '<meta property="og:site_name" content="'.$data['website']['siteName'].'" />';
         }
-        
+
         return $tags;
     }
 
     protected function getArticleTags($data)
     {
-        $view = $this->getView();
-
         $tags = [
             '<meta property="og:title" content="'.$data['article']['title'].'" />',
             '<meta property="og:image" content="'.$data['article']['image'].'" />',
@@ -140,9 +141,9 @@ class OpenGraph extends AbstractHelper
             $tags[] = '<meta name="author" content="'.$data['article']['author'].'">';
         }
 
-        if (!empty($view->page) && $view->page instanceof Page) {
-            /** @var Page $page */
-            $page = $view->page;
+        $page = $this->getPage();
+
+        if ($page->getPageId() && $page->getCurrentRevision()) {
             $revision = $page->getCurrentRevision();
             $created = $page->getCreatedDate();
             $modified = $revision->getPublishedDate();
@@ -172,15 +173,14 @@ class OpenGraph extends AbstractHelper
             return $this->openGraphData;
         }
 
-        $view = $this->getView();
-
         $data = new Config($this->getDefaults());
+        $page = $this->getPage();
 
         // CMS page
-        if (!empty($view->page) && $view->page instanceof Page) {
+        if ($page->getPageId()) {
             /** @var \WShafer\OpenGraph\Repository\OpenGraphRepository $repo */
             $repo = $this->entityManager->getRepository('WShafer\OpenGraph\Entity\OpenGraph');
-            $savedData = new Config($repo->getOpenGraphAsArrayByPage($view->page));
+            $savedData = new Config($repo->getOpenGraphAsArrayByPage($page));
             $data->merge($savedData);
         }
 
@@ -198,29 +198,35 @@ class OpenGraph extends AbstractHelper
         $titleHelper = $view->plugin('headTitle');
         $titleRendered = $titleHelper->renderTitle();
 
-        /** @var Page $page */
-        $page = !empty($view->page) ? $view->page : new Page();
-        $site = !empty($page->getSite()) ? $page->getSite() : new Site();
+        $page = $this->getPage();
+        $site = $this->getSite();
 
         return [
+            'cache' => [
+                'key' => $this->getCacheKey()
+            ],
+            
             'facebook' => [
                 'appId' => !empty($configDefaults['facebook']['appId']) ? $configDefaults['facebook']['appId'] : '',
             ],
+            
             'general' => [
                 'ogType' => 'website',
             ],
+            
             'website' => [
                 'title' => !empty($titleRendered) ? $titleRendered : $configDefaults['website']['title'],
                 'image' => $configDefaults['website']['image'],
                 'description' => $page->getDescription() ? $page->getDescription() : $configDefaults['website']['description'],
                 'siteName' => $site->getSiteTitle() ? $site->getSiteTitle() : $configDefaults['website']['siteName'],
             ],
+            
             'article' => [
                 'title' => !empty($titleRendered) ? $titleRendered : $configDefaults['article']['title'],
                 'image' => $configDefaults['article']['image'],
                 'description' => $page->getDescription() ? $page->getDescription() : $configDefaults['article']['description'],
                 'siteName' => $site->getSiteTitle() ? $site->getSiteTitle() : $configDefaults['article']['siteName'],
-                'tags' => $configDefaults['article']['tags'],
+                'tags' => [],
                 'author' => $configDefaults['article']['author'],
                 'section' => $configDefaults['article']['section']
             ]
@@ -234,5 +240,51 @@ class OpenGraph extends AbstractHelper
         }
 
         return $this->config['openGraph']['defaults'];
+    }
+
+    /**
+     * @return Page
+     */
+    public function getPage()
+    {
+        if (!empty($this->page)) {
+            return $this->page;
+        }
+
+        $view = $this->getView();
+
+        if (empty($view->page) || !$view->page instanceof Page) {
+            $this->page = new Page();
+            return $this->page;
+        }
+
+        $this->page = $view->page;
+        return $this->page;
+    }
+
+    /**
+     * @return Site
+     */
+    public function getSite()
+    {
+        if (!empty($this->site)) {
+            return $this->site;
+        }
+
+        $page = $this->getPage();
+
+        if (empty($page->getSite())) {
+            $this->site = new Site();
+            return $this->site;
+        }
+
+        $this->site = $page->getSite();
+        return $this->site;
+    }
+    
+    public function getCacheKey()
+    {
+        $view = $this->getView();
+        return 'openGraph_'.md5($view->serverUrl(true));
     }
 }

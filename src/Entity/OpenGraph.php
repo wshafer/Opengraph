@@ -161,7 +161,7 @@ class OpenGraph
     public function toArray()
     {
         return [
-            'ogType' => $this->getType()? $this->getType() : null
+            'ogType' => $this->getType()
         ];
     }
 }

@@ -1,0 +1,6 @@
+.idea
+vendor
+.vagrant
+.env
+.DS_Store
+atlassian-ide-plugin.xml

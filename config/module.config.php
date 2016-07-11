@@ -115,10 +115,7 @@ return [
                 'description' => '',
                 'siteName' => '',
                 'author' => '',
-                'section' => '',
-                'tags' => array(
-                    'New Tag'
-                )
+                'section' => ''
             ],
         ],
     ],

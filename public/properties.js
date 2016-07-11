@@ -39,6 +39,10 @@ angular.module('openGraph', ['rcmApi', 'rcmAdminApi'])
 
             $scope.openGraph = currentSettings;
 
+            if (!$scope.openGraph.article.tags[0]) {
+                $scope.openGraph.article.tags.push('');
+            }
+
             console.log($scope.openGraph.article);
             $scope.addTag = function() {
                 $scope.openGraph.article.tags.push('');

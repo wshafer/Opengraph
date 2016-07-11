@@ -33,9 +33,7 @@ class OgTypeValidator implements ValidatorInterface
 
     public function isValid($value)
     {
-        if (empty($value) 
-            || !in_array($value, $this->types)
-        ) {
+        if (!in_array($value, $this->types)) {
             $this->messages[] = $this->message;
             return false;
         }
