@@ -13,6 +13,10 @@ Composer:
 $ composer require wshafer/opengraph
 ```
 
+Config:
+
+Add `WShafer\OpenGraph` to your config/application.config.php modules section.
+
 DB Updates
 ==========
 
@@ -24,7 +28,7 @@ sql file:
 $ php pubic/index.php orm:schema-tool:update --dump-sql
 ```
 
-Run the generated sql file against your database.
+Run the generated sql against your database.
 
 Layouts
 =======
