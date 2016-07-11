@@ -1,0 +1,105 @@
+<style type="text/css">
+    .ogPreview {
+        width: 476px;
+        display: block;
+        margin: auto;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1) inset, 0 1px 1px rgba(0, 0, 0, 0.05);
+        text-align: left;
+        padding-bottom: 1px;
+        margin-bottom: 20px;
+    }
+
+    .ogPreview .imagePreview {
+        border-color: rgba(0, 0, 0, 0.098) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.23);
+        border-color: rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        color: #90949c;
+        cursor: pointer;
+
+    }
+
+    .ogPreview .imagePreview .imageContainer {
+        height: 246px;
+        width: 476px;
+        overflow: hidden;
+        position: relative;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        display: block;
+        cursor: pointer;
+        line-height: 0;
+        font-size: 12px;
+    }
+
+    .ogPreview .imagePreview .imageContainer img {
+        height: auto;
+        width: 100%;
+        vertical-align: bottom;
+        line-height: 0;
+    }
+
+    .ogPreview .previewTitle {
+        color: #1d2129;
+        text-decoration: none;
+        transition: color 0.1s ease-in-out 0s;
+        cursor: pointer;
+        font-family: Georgia,serif;
+        letter-spacing: normal;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 22px;
+        word-wrap: break-word;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin: 0;
+        width: 100%;
+    }
+
+    .ogPreview .previewDesc {
+        font-family: helvetica,arial,sans-serif;
+        line-height: 22px;
+        max-height: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+        font-size: 12px;
+        word-wrap: break-word;
+        color: #1d2129;
+        margin: 3px 0 0 0;
+    }
+
+    .ogPreview .previewHostName {
+        font-size: 11px;
+        line-height: 11px;
+        text-transform: uppercase;
+        color: #90949c;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: break-word;
+        font-family: helvetica,arial,sans-serif;
+        margin: 6px 0 0 0;
+    }
+
+    .ogPreview .previewContentBox {
+        height: auto;
+        margin: 10px 12px;
+        max-height: 100px;
+    }
+</style>
+<div class="ogPreview">
+    <div class="imagePreview">
+        <div class="imageContainer">
+            <img src="{{openGraph.website.image}}" height="246" width="470px" />
+        </div>
+    </div>
+    <div class="previewContentBox">
+        <p class="previewTitle">{{openGraph.website.title}}</p>
+        <p class="previewDesc">{{openGraph.website.description}}</p>
+        <p class="previewHostName">{{host}}</p>
+    </div>
+</div>
+
+

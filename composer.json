@@ -1,0 +1,30 @@
+{
+    "name": "wshafer/opengraph",
+    "description": "Adds an Open Graph tag manager to the Reliv Content Manager.",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "reliv",
+        "content",
+        "manager",
+        "plugin",
+        "rcm",
+        "Open Graph"
+    ],
+    "homepage": "http://www.reliv.com/",
+    "authors": [
+        {
+            "name": "Westin Shafer",
+            "email": "wshafer@havenly.com",
+        }
+    ],
+    "require": {
+        "php": ">=7.*",
+        "rwoverdijk/assetmanager": "1.*",
+        "rcm/core": "1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "WShafer\\OpenGraph\\": "src/"
+        }
+    }
+}

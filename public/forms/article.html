@@ -1,0 +1,39 @@
+<div class="ogQuestion">
+    <label for="ogSiteName">Site Name:</label>
+    <input id="ogSiteName" name="ogSiteName" ng-model="openGraph.article.siteName" type="text">
+</div>
+
+<div class="ogQuestion">
+    <label for="ogAuthor">Author:</label>
+    <input id="ogAuthor" name="ogAuthor" ng-model="openGraph.article.author" type="text">
+</div>
+
+<div class="ogQuestion">
+    <label for="ogTitle">Article Title:</label>
+    <input id="ogTitle" name="ogTitle" ng-model="openGraph.article.title" type="text">
+</div>
+
+<div class="ogQuestion">
+    <label for="ogDescription">Article Description:</label>
+    <input id="ogDescription" name="ogDescription" ng-model="openGraph.article.description" type="text">
+</div>
+
+<div class="ogQuestion">
+    <label for="ogSection">Article Section:</label>
+    <input id="ogSection" name="ogSection" ng-model="openGraph.article.section" type="text">
+</div>
+
+<div class="ogQuestion with-buttons" data-ng-repeat="tag in openGraph.article.tags track by $index">
+    <label for="ogTag">Tag:</label>
+    <input id="ogTag" name="ogTag[$index]" ng-model="openGraph.article.tags[$index]" type="text">
+    <button class="btn btn-danger btn-sm" type="button" ng-hide="$last" ng-click="removeTag($index)">
+        <span class="glyphicon glyphicon-minus"></span>
+    </button>
+    <button class="btn btn-success btn-sm" type="button" ng-show="$last" ng-click="addTag()">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
+</div>
+
+<div class="ogQuestion">
+    <div image-selector="" ng-model="openGraph.article.image" name="Image:" src="{openGraph.article.image}"></div>
+</div>

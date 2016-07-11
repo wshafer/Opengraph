@@ -1,0 +1,62 @@
+<style type="text/css">
+    #open-graph-properties label {
+        padding-top: 10px;
+    }
+
+    #open-graph-properties select,
+    #open-graph-properties option,
+    #open-graph-properties input
+
+    {
+        margin: 6px;
+        padding-left: 4px;
+        padding-top: 4px;
+        padding-bottom: 0;
+    }
+
+    #open-graph-properties .ogQuestion {
+        width: 100%;
+        display: block;
+        clear: both;
+    }
+
+    #open-graph-properties .ogQuestion img {
+        display: none;
+    }
+
+    #open-graph-properties .ogQuestion label {
+        width: 20%;
+        display: block;
+        float: left;
+        text-align: right;
+    }
+
+    #open-graph-properties .ogQuestion .imageInput br {
+        display: none;
+    }
+
+    #open-graph-properties .ogQuestion.with-buttons input {
+        min-width: 69%;
+        float: left;
+    }
+</style>
+
+<div id="open-graph-properties">
+    <form>
+        <div class="ogQuestion">
+            <label for="ogType">Type:</label>
+            <select ng-model="openGraph.general.ogType" id="ogType" name="ogType">
+                <option
+                    ng-repeat="option in ogTypes"
+                    ng-selected="{{option.ogType === openGraph.general.ogType}}"
+                    value="{{option.ogType}}"
+                >
+                    {{option.ogType}}
+                </option>
+            </select>
+        </div>
+
+    <div class="typeForm" type-form></div>
+
+    </form>
+</div>
