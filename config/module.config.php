@@ -76,13 +76,6 @@ return [
                 ]
             ]
         ],
-        'configuration' => [
-            'orm_default' => [
-                'metadata_cache' => 'doctrine_cache',
-                'query_cache' => 'doctrine_cache',
-                'result_cache' => 'doctrine_cache',
-            ]
-        ],
     ],
 
     'view_helpers' => [
